@@ -50,8 +50,6 @@ function selectLoc(id, options) {
   if (options.updateWindowLocation) {
     window.location.href = '#loc=' + id + ';';
   }
-
-  _gaq.push(['_trackEvent', 'git-cheatsheet', 'select-loc', id, null]);
 }
 
 
@@ -78,26 +76,23 @@ $(function () {
       var cmd = prev($cmds, $('#commands>dt.selected')[0]);
       if (cmd) selectCommand($(cmd));
       return false;
-    } else {
-//      console.log(e);
     }
   });
 
 
   // Figure the language
   var lang = cookies.read('lang') || detectLanguage(navigator);
-  
+
   // Fallback to English if the language is not translated
   if (!translations[lang]) {
     lang = "en";
   }
-  
+
   $('[data-lang='+lang+']').addClass('selected')
 
   $('.lang').on('click', function() {
     var newLang = $(this).attr('data-lang');
     cookies.create('lang', newLang)
-    _gaq.push(['_trackEvent', 'git-cheatsheet', 'lang', newLang, null])
     document.location.reload();
   })
 
@@ -141,7 +136,6 @@ $(function () {
 
   $('body').on('mouseover', ':not(#commands) [data-docs]', function () {
     showDocsForElement($(this));
-    _gaq.push(['_trackEvent', 'git-cheatsheet', 'mouseover', $(this).text(), null]);
   });
 
   $.fn.hoverClass = function (klass) {
@@ -159,8 +153,6 @@ $(function () {
     var doc = $cmd.next('dd').text() || '',
         cmd = 'git ' + $cmd.html();
     showDocs(doc, cmd);
-
-    _gaq.push(['_trackEvent', 'git-cheatsheet', 'select', 'git ' + $cmd.text(), null]);
   };
 
   $('#commands>dt').click(function (e) {
